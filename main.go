@@ -4,6 +4,8 @@ import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"log"
 	"os"
+
+	"tgBot/controller"
 )
 
 func main() {
@@ -31,11 +33,7 @@ func main() {
 			// Логируем входящее сообщение
 			log.Printf("[%s] %s", update.Message.From.UserName, update.Message.Text)
 
-			// Обрабатываем команду /start
-			if update.Message.Text == "/start" {
-				msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Hello, World!")
-				bot.Send(msg)
-			}
+			controller.HandleMessage(bot, update)
 		}
 	}
 
