@@ -1,21 +1,42 @@
 package main
 
 import (
-	"fmt"
+	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
+	"log"
+	"os"
 )
 
-//TIP <p>To run your code, right-click the code and select <b>Run</b>.</p> <p>Alternatively, click
-// the <icon src="AllIcons.Actions.Execute"/> icon in the gutter and select the <b>Run</b> menu item from here.</p>
-
 func main() {
-	//TIP <p>Press <shortcut actionId="ShowIntentionActions"/> when your caret is at the underlined text
-	// to see how GoLand suggests fixing the warning.</p><p>Alternatively, if available, click the lightbulb to view possible fixes.</p>
-	s := "gopher"
-	fmt.Println("Hello and welcome, %s!", s)
+	botToken := os.Getenv("TG_BOT_TOKEN")
 
-	for i := 1; i <= 5; i++ {
-		//TIP <p>To start your debugging session, right-click your code in the editor and select the Debug option.</p> <p>We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-		// for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.</p>
-		fmt.Println("i =", 100/i)
+	bot, err := tgbotapi.NewBotAPI(botToken)
+
+	if botToken == "" {
+		log.Fatal("TELEGRAM_BOT_TOKEN не установлен в переменных окружения")
 	}
+
+	if err != nil {
+		log.Panic(err)
+	}
+
+	// Создаем объект для получения обновлений от Telegram
+	u := tgbotapi.NewUpdate(0)
+	u.Timeout = 60
+
+	updates := bot.GetUpdatesChan(u)
+
+	for update := range updates {
+		// Проверяем, есть ли сообщение
+		if update.Message != nil {
+			// Логируем входящее сообщение
+			log.Printf("[%s] %s", update.Message.From.UserName, update.Message.Text)
+
+			// Обрабатываем команду /start
+			if update.Message.Text == "/start" {
+				msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Hello, World!")
+				bot.Send(msg)
+			}
+		}
+	}
+
 }
