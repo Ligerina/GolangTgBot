@@ -9,14 +9,12 @@ import (
 )
 
 func main() {
+	//Config tg bot
 	botToken := os.Getenv("TG_BOT_TOKEN")
-
 	bot, err := tgbotapi.NewBotAPI(botToken)
-
 	if botToken == "" {
 		log.Fatal("TELEGRAM_BOT_TOKEN не установлен в переменных окружения")
 	}
-
 	if err != nil {
 		log.Panic(err)
 	}
@@ -38,3 +36,7 @@ func main() {
 	}
 
 }
+
+// Получать текущую цену ETH - DONE
+// Выводить цену опользаку по запросу - DONE
+// По адресу получать цену кошелька и выводить пользаку - DONE
