@@ -10,5 +10,5 @@ func HandleMessage(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 		return
 	}
 
-	facade.HandleCommand(bot, update)
+	facade.HandleMessage(bot, update)
 }

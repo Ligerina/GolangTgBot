@@ -3,8 +3,7 @@ package Api
 import (
 	"encoding/json"
 	"net/http"
-
-	"tgBot/service/model"
+	"tgBot/model"
 )
 
 func GetETHPrice() (float64, error) {

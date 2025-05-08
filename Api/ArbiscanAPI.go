@@ -6,8 +6,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
-
-	"tgBot/service/model"
+	"tgBot/model"
 )
 
 func GetWalletBalance(address string) (float64, error) {
