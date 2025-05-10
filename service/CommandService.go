@@ -11,6 +11,7 @@ var userAddresses = make(map[int64][]string)
 
 // HandleAddAddress обрабатывает команду /addaddress
 func HandleAddAddress(update tgbotapi.Update) string {
+
 	userID := update.Message.Chat.ID
 	args := strings.TrimSpace(update.Message.CommandArguments())
 
@@ -32,7 +33,7 @@ func HandleAddAddress(update tgbotapi.Update) string {
 
 // handleMyAddresses отвечает на команду /myaddresses
 func HandleMyAddresses(update tgbotapi.Update) string {
-	userID := update.Message.Chat.ID
+	userID := update.CallbackQuery.Message.Chat.ID
 
 	addresses := userAddresses[userID]
 	if len(addresses) == 0 {

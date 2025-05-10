@@ -11,6 +11,8 @@ func handleCommand(update tgbotapi.Update) tgbotapi.MessageConfig {
 	text := ""
 
 	switch command {
+	case "start":
+		break
 	case "addAddress":
 		text = service.HandleAddAddress(update)
 		break

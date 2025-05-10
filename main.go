@@ -18,25 +18,23 @@ func main() {
 	if err != nil {
 		log.Panic(err)
 	}
-
 	// Создаем объект для получения обновлений от Telegram
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 60
-
 	updates := bot.GetUpdatesChan(u)
 
 	for update := range updates {
-		// Проверяем, есть ли сообщение
-		if update.Message != nil {
-			// Логируем входящее сообщение
-			log.Printf("[%s] %s", update.Message.From.UserName, update.Message.Text)
 
+		// ОБРАБОТКА КОМАНД
+		if update.Message != nil {
+			log.Printf("[%s] %s", update.Message.From.UserName, update.Message.Text)
 			controller.HandleMessage(bot, update)
+		}
+
+		// ОБРАБОТКА НАЖАТИЙ НА КНОПКУ
+		if update.CallbackQuery != nil {
+			controller.HandleButtonCommand(bot, update)
 		}
 	}
 
 }
-
-// Получать текущую цену ETH - DONE
-// Выводить цену опользаку по запросу - DONE
-// По адресу получать цену кошелька и выводить пользаку - DONE
